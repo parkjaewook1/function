@@ -10,19 +10,22 @@ mv ../frontend/dist src/main/resources/static
 # spring project build
 ./gradlew bootJar
 
+
 # build image
-docker build -t chaiheung/petmily .
+#docker build -t park5050/petmily .
+docker buildx build --platform linux/amd64,linux/arm64 -t park5050/petmily --push .
+
 
 # push image
-docker push chaiheung/petmily
+#docker push park5050/petmily
 
 # remote 에서
 
 # 컨테이너 멈추고
-ssh -i src/main/resources/secret/key1123.pem ubuntu@52.79.251.74 'docker stop petmily'
+ssh -i src/main/resources/secret/key0527.pem ubuntu@3.36.64.206 'docker stop petmily'
 # 컨테이너 삭제
-ssh -i src/main/resources/secret/key1123.pem ubuntu@52.79.251.74 'docker rm petmily'
+ssh -i src/main/resources/secret/key0527.pem ubuntu@3.36.64.206 'docker rm petmily'
 # pull image
-ssh -i src/main/resources/secret/key1123.pem ubuntu@52.79.251.74 'docker pull chaiheung/petmily'
+ssh -i src/main/resources/secret/key0527.pem ubuntu@3.36.64.206 'docker pull park5050/petmily'
 # 컨테이너 실행
-ssh -i src/main/resources/secret/key1123.pem ubuntu@52.79.251.74 'docker run -d -p 8080:8080 --restart always --name petmily chaiheung/petmily'
+ssh -i src/main/resources/secret/key0527.pem ubuntu@3.36.64.206 'docker run -d -p 8080:8080 --restart always --name petmily park5050/petmily'
